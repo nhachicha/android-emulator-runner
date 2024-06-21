@@ -13,6 +13,7 @@ inputs:
       - android-wear-cn
       - android-tv
       - google-tv
+      - google_apis_ps16k
   arch:
     type: enum
     allowed-values:

@@ -32,16 +32,16 @@ export async function launchEmulator(
     if (!fs.existsSync(avdPath) || forceAvdCreation) {
       const profileOption = profile.trim() !== '' ? `--device '${profile}'` : '';
       const sdcardPathOrSizeOption = sdcardPathOrSize.trim() !== '' ? `--sdcard '${sdcardPathOrSize}'` : '';
-      console.log(`Creating AVD.`);
-      await exec.exec(
-        `sh -c \\"echo no | avdmanager create avd --force -n "${avdName}" --abi '${arch}' --package 'system-images;android-${apiLevel};${target};${arch}' ${profileOption} ${sdcardPathOrSizeOption}"`
-      );
-      await exec.exec(`sh -c \\"ls -l ${process.env.ANDROID_AVD_HOME}/"`);
-      await exec.exec(`sh -c \\"ls -l /home/runner/.android/avd/"`);
-      await exec.exec(`sh -c \\"ls -l ${process.env.ANDROID_AVD_HOME}/"${avdName}".avd/"`);
-      await exec.exec(`sh -c \\"ls -l ${process.env.ANDROID_AVD_HOME}/"${avdName}".avd"/config.ini`);
+      // console.log(`Creating AVD.`);
+      // await exec.exec(
+      //   `sh -c \\"echo no | avdmanager create avd --force -n "${avdName}" --abi '${arch}' --package 'system-images;android-${apiLevel};${target};${arch}' ${profileOption} ${sdcardPathOrSizeOption}"`
+      // );
 
     }
+    await exec.exec(`sh -c \\"ls -l ${process.env.ANDROID_AVD_HOME}/"`);
+    await exec.exec(`sh -c \\"ls -l /home/runner/.android/avd/"`);
+    await exec.exec(`sh -c \\"ls -l ${process.env.ANDROID_AVD_HOME}/"${avdName}".avd/"`);
+    await exec.exec(`sh -c \\"ls -l ${process.env.ANDROID_AVD_HOME}/"${avdName}".avd"/config.ini`);
 
     if (cores) {
       await exec.exec(`sh -c \\"printf 'hw.cpu.ncore=${cores}\n' >> ${process.env.ANDROID_AVD_HOME}/"${avdName}".avd"/config.ini`);

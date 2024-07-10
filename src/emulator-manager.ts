@@ -34,17 +34,18 @@ export async function launchEmulator(
       await exec.exec(
         `sh -c \\"echo no | avdmanager create avd --force -n "${avdName}" --abi '${arch}' --package 'system-images;android-${apiLevel};${target};${arch}' ${profileOption} ${sdcardPathOrSizeOption} -p /home/runner/.android/avd/"`
       );
+      await exec.exec(`sh -c \\"ls -l ${process.env.ANDROID_AVD_HOME}/"`);
+      await exec.exec(`sh -c \\"ls -l /home/runner/.android/avd/"`);
+      await exec.exec(`sh -c \\"ls -l ${process.env.ANDROID_AVD_HOME}/"${avdName}".avd/"`);
+      await exec.exec(`sh -c \\"ls -l ${process.env.ANDROID_AVD_HOME}/"${avdName}".avd"/config.ini`);
+
     }
 
     if (cores) {
       await exec.exec(`sh -c \\"printf 'hw.cpu.ncore=${cores}\n' >> ${process.env.ANDROID_AVD_HOME}/"${avdName}".avd"/config.ini`);
     }
 
-    await exec.exec(`sh -c \\"ls -l ${process.env.ANDROID_AVD_HOME}/"`);
-    await exec.exec(`sh -c \\"ls -l /home/runner/.android/avd/"`);
-    await exec.exec(`sh -c \\"ls -l ${process.env.ANDROID_AVD_HOME}/"${avdName}".avd/"`);
-    await exec.exec(`sh -c \\"ls -l ${process.env.ANDROID_AVD_HOME}/"${avdName}".avd"/config.ini`);
-
+    
     if (ramSize) {
       await exec.exec(`sh -c \\"printf 'hw.ramSize=${ramSize}\n' >> ${process.env.ANDROID_AVD_HOME}/"${avdName}".avd"/config.ini`);
     }

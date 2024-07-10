@@ -25,7 +25,6 @@ export async function launchEmulator(
 ): Promise<void> {
   try {
     console.log(`::group::Launch Emulator`);
-    await exec.exec(`sh -c \\"ls -l ${process.env.ANDROID_AVD_HOME}/"`);
     // create a new AVD if AVD directory does not already exist or forceAvdCreation is true
     const avdPath = `${process.env.ANDROID_AVD_HOME}/${avdName}.avd`;
     if (!fs.existsSync(avdPath) || forceAvdCreation) {

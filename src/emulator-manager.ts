@@ -27,12 +27,14 @@ export async function launchEmulator(
     console.log(`::group::Launch Emulator`);
     // create a new AVD if AVD directory does not already exist or forceAvdCreation is true
     const avdPath = `${process.env.ANDROID_AVD_HOME}/${avdName}.avd`;
+    console.log(`Creating avd in ${avdPath}`);
+    console.log(`User ${process.env.USER}`);
     if (!fs.existsSync(avdPath) || forceAvdCreation) {
       const profileOption = profile.trim() !== '' ? `--device '${profile}'` : '';
       const sdcardPathOrSizeOption = sdcardPathOrSize.trim() !== '' ? `--sdcard '${sdcardPathOrSize}'` : '';
       console.log(`Creating AVD.`);
       await exec.exec(
-        `sh -c \\"echo no | avdmanager create avd --force -n "${avdName}" --abi '${arch}' --package 'system-images;android-${apiLevel};${target};${arch}' ${profileOption} ${sdcardPathOrSizeOption} -p /home/runner/.android/avd/"`
+        `sh -c \\"echo no | avdmanager create avd --force -n "${avdName}" --abi '${arch}' --package 'system-images;android-${apiLevel};${target};${arch}' ${profileOption} ${sdcardPathOrSizeOption}"`
       );
       await exec.exec(`sh -c \\"ls -l ${process.env.ANDROID_AVD_HOME}/"`);
       await exec.exec(`sh -c \\"ls -l /home/runner/.android/avd/"`);

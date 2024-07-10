@@ -25,6 +25,7 @@ export async function launchEmulator(
 ): Promise<void> {
   try {
     console.log(`::group::Launch Emulator`);
+    await exec.exec(`sh -c \\"ls -l ${process.env.ANDROID_AVD_HOME}/"`);
     // create a new AVD if AVD directory does not already exist or forceAvdCreation is true
     const avdPath = `${process.env.ANDROID_AVD_HOME}/${avdName}.avd`;
     if (!fs.existsSync(avdPath) || forceAvdCreation) {
@@ -39,6 +40,11 @@ export async function launchEmulator(
     if (cores) {
       await exec.exec(`sh -c \\"printf 'hw.cpu.ncore=${cores}\n' >> ${process.env.ANDROID_AVD_HOME}/"${avdName}".avd"/config.ini`);
     }
+
+    await exec.exec(`sh -c \\"ls -l ${process.env.ANDROID_AVD_HOME}/"`);
+    await exec.exec(`sh -c \\"ls -l /home/runner/.android/avd/"`);
+    await exec.exec(`sh -c \\"ls -l ${process.env.ANDROID_AVD_HOME}/"${avdName}".avd/"`);
+    await exec.exec(`sh -c \\"ls -l ${process.env.ANDROID_AVD_HOME}/"${avdName}".avd"/config.ini`);
 
     if (ramSize) {
       await exec.exec(`sh -c \\"printf 'hw.ramSize=${ramSize}\n' >> ${process.env.ANDROID_AVD_HOME}/"${avdName}".avd"/config.ini`);

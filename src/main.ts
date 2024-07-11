@@ -177,7 +177,7 @@ async function run() {
     console.log(`::endgroup::`);
 
     // install SDK
-    await installAndroidSdk(apiLevel, target, arch, channelId, emulatorBuild, ndkVersion, cmakeVersion);
+    // await installAndroidSdk(apiLevel, target, arch, channelId, emulatorBuild, ndkVersion, cmakeVersion);
 
     // execute pre emulator launch script if set
     if (preEmulatorLaunchScripts !== undefined) {
